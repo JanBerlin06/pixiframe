@@ -1,5 +1,5 @@
 <?php
-include 'db.php';  // Datenbankverbindung einbinden
+include 'db.php';
 include 'header.php';
 session_start();
 

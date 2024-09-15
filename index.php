@@ -27,8 +27,6 @@ $categories = [
 ];
 ?>
 
-
-
 <h1>PixiFrame</h1>
 
 <!-- Suchformular für die Kategorien -->
@@ -55,7 +53,6 @@ $categories = [
                     <?php $imgData = base64_encode($image['image_data']); ?>
                     <img src="data:image/jpeg;base64,<?php echo $imgData; ?>" alt="Kundenbild">
                 </a>
-                <p class="cat-p">Kategorie: <?php echo $categories[$image['category_id']]; ?></p>
             </div>
         <?php endforeach; ?>
     <?php else: ?>
