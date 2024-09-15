@@ -82,6 +82,3 @@ PixiFrame ist eine Fotoplattform-Anwendung, die es Fotografen ermöglicht, Fotos
 - Beachte, dass **ngrok** bei jedem Neustart eine neue URL generiert. Du musst die URLs in **`checkout.php`** und **den Webhook-Einstellungen** in Stripe jedes Mal aktualisieren.
 - **Stripe API-Schlüssel** sollten sicher verwahrt werden und nicht in öffentlichen Repositories landen.
 
----
-
-## Dateistruktur:
