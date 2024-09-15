@@ -2,16 +2,27 @@
 include 'db.php';
 session_start();
 
-// Prüfen, ob ein Kommentar gesendet wurde
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['comment_text'], $_POST['image_id'])) {
     $commentText = $_POST['comment_text'];
     $imageId = (int)$_POST['image_id'];
 
-    // Benutzername aus der Session nehmen, falls vorhanden, ansonsten Standardwert für Gäste setzen
-    $author = isset($_SESSION['username']) ? $_SESSION['username'] : 'Gast';  // Standardname 'Gast'
+    // Überprüfen, ob der Benutzer eingeloggt ist
+    if (isset($_SESSION['user_id'])) {
+        // Benutzer ist eingeloggt, hole den Namen aus der Tabelle "users" anhand der user_id
+        $sql = "SELECT name FROM users WHERE user_id = :user_id";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute(['user_id' => $_SESSION['user_id']]);
+        $user = $stmt->fetch();
 
-    // SQL-Abfrage zum Einfügen des Kommentars
-    $sql = "INSERT INTO comment (image_id, text, author, user_id, release_date) VALUES (:image_id, :text, :author, :user_id, NOW())";
+        $author = $user['name'];  // Den "name" aus der Datenbank verwenden
+    } else {
+        // Benutzer ist nicht eingeloggt, setze den Standardwert "Gast"
+        $author = 'Gast';
+    }
+
+    // Kommentar in die Datenbank einfügen
+    $sql = "INSERT INTO comment (image_id, text, author, user_id, release_date) 
+            VALUES (:image_id, :text, :author, :user_id, NOW())";
     $stmt = $pdo->prepare($sql);
     $stmt->execute([
         'image_id' => $imageId,
@@ -21,8 +32,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['comment_text'], $_POST
     ]);
 
     // Nach dem Kommentar zurück zur Bildseite
-    header("Location: index.php");
+    header("Location: detail.php?image_id=" . $imageId);
     exit;
 }
 ?>
+
 

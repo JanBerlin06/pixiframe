@@ -12,8 +12,8 @@ session_start();
         <a href="manage_subscription.php">Abonnement</a>
         <a href="logout.php">Logout</a>  <!-- Nur anzeigen, wenn der Benutzer eingeloggt ist -->
     <?php else: ?>
-        <a href="register.php">Registrieren</a>  <!-- Registrierung für nicht eingeloggte Benutzer -->
-        <a href="login.php">Login</a>  <!-- Login für nicht eingeloggte Benutzer -->
+        <a href="register.php">Registrieren</a>
+        <a href="login.php">Login</a>
     <?php endif; ?>
 </nav>
-<hr>
+

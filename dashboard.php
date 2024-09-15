@@ -1,6 +1,6 @@
 <?php
 include 'db.php';
-include 'navigation.php';
+include 'header.php';
 session_start();
 
 // Bilder des Benutzers abrufen
@@ -66,3 +66,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_description']))
         <p>Du hast noch keine Bilder hochgeladen.</p>
     <?php endif; ?>
 </div>
+
+<?php
+include 'footer.php';

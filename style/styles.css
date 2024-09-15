@@ -1,0 +1,309 @@
+/* Allgemeine Stile für die gesamte Website */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+h1, h2 {
+    text-align: center;
+    color: #333;
+}
+
+p {
+    color: #555;
+    text-align: center;
+    margin: 0.5em;
+}
+
+a {
+    text-decoration: none;
+    color: #FFC300;
+}
+
+a:hover {
+    color: #FFD60A;
+}
+
+/* Navigation */
+nav {
+    background-color: #f4f4f4;
+    padding: 10px 0;
+    text-align: center;
+    box-shadow: 0px 10px 28px -16px #000000;
+
+    position: sticky;
+    top: 0;  /* Hält die Navigation oben am Bildschirm */
+    z-index: 1000;  /* Sicherstellen, dass die Navigation über anderen Elementen bleibt */
+}
+
+
+nav a {
+    color: black;
+    margin: 0 15px;
+    font-size: 16px;
+}
+
+nav a:hover {
+    color: #979797;
+}
+
+/* Container für den Inhalt */
+.container {
+    width: 80%;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Buttons */
+button, .btn {
+    padding: 0.5em;
+    font-size: 16px;
+    background-color: #FFC300;
+    color: black;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    display: inline-block;
+}
+
+button:hover, .btn:hover {
+    background-color: #FFD60A;
+}
+
+.cat-p{
+    color: black;
+    font-weight: bold;
+}
+
+/* Gallerie für index.php */
+.gallery-container {
+    width: 80%;
+    margin: 20px auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.gallery-item {
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    width: 200px;
+    text-align: center;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.gallery-item-hover:hover {
+    filter: brightness(0.95);
+}
+
+.gallery-item img {
+    width: 100%;
+    height: auto;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.gallery-item p {
+    font-size: 14px;
+    color: #555;
+    margin-top: 10px;
+}
+
+/* Suchformular */
+.search-container {
+    width: 80%;
+    margin: 20px auto;
+    text-align: center;
+}
+
+.search-container form {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.search-container select {
+    padding: 10px;
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+
+
+
+/* Stile für die Seite manage_subscription.php */
+.subscription-container {
+    width: 60%;
+    margin: 50px auto;
+    padding: 20px;
+    text-align: center;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.subscription-container h2 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.subscription-container p {
+    color: #555;
+    margin-bottom: 20px;
+    font-size: 18px;
+}
+
+/* Fußzeile */
+footer {
+    text-align: center;
+    padding: 0.5em;
+    background-color: #f4f4f4;
+    color: black;
+    bottom: 0;
+    width: 100%;
+    min-height: 60px; /* Minimale Höhe des Footers */
+    box-shadow: 0px -10px 28px -23px #000000;
+    box-sizing: border-box;
+    margin-top: 20px; /* Optionaler Abstand zwischen Inhalt und Footer */
+}
+
+
+footer a {
+    color: #007BFF;
+    text-decoration: none;
+}
+
+footer a:hover {
+    color: #ddd;
+}
+
+/* Anpassung der einzelnen Seiten*/
+
+.register-page {
+    height: 100vh;  /* Vollständige Höhe des Viewports */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;  /* Horizontale Zentrierung */
+    align-items: center;  /* Vertikale Zentrierung */
+    background-color: #f4f4f4;  /* Heller Hintergrund */
+}
+
+.form-default-design {
+    background-color: white;
+    padding: 2em;
+    border-radius: 10px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    width: 20em;  /* Feste Breite für das Formular */
+}
+
+.form-default-design input {
+    padding: 10px;
+    margin-bottom: 1em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 100%;  /* Volle Breite für die Eingabefelder */
+}
+
+
+.form-default-design button:hover {
+    background-color: #FFD60A;
+}
+
+/* upload_image Page */
+
+.result-upload {
+    padding: 10px;
+    margin-bottom: 1em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 100%;
+}
+
+/* Detail Page */
+/* Detailseite: Bild und Kommentare nebeneinander */
+.image-detail-page {
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.image-detail-container {
+    display: flex;
+    gap: 40px; /* Abstand zwischen dem Bild und den Kommentaren */
+}
+
+.image-preview {
+    max-width: 50%; /* Bildgröße auf 50% der Seite beschränken */
+    text-align: center;
+}
+
+.image-preview img {
+    width: 100%; /* Bild auf die volle Breite des Containers anpassen */
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.image-info {
+    max-width: 40%;
+}
+
+.comments, .comment-form {
+    margin-top: 20px;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.comments h3, .comment-form h4 {
+    margin-top: 0;
+}
+
+.comment {
+    margin-bottom: 15px;
+}
+
+.comment small {
+    display: block;
+    font-size: 12px;
+    color: #888;
+}
+
+.comment-form textarea {
+    width: 100%;
+    height: 80px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    resize: none;
+}
+
+.comment-form button {
+    background-color: #f0ad4e;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.comment-form button:hover {
+    background-color: #ec971f;
+}

@@ -1,8 +1,9 @@
 <?php
 include 'db.php';  // Datenbankverbindung einbinden
-include 'navigation.php';
+include 'header.php';
 session_start();
 
+// Überprüfen, ob das Formular gesendet wurde und ob ein Bild hochgeladen wurde
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['image'])) {
     $userId = $_SESSION['user_id'];
     $categoryId = $_POST['category_id'];
@@ -11,20 +12,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['image'])) {
     // Dateiinhalt als BLOB auslesen
     $imageData = file_get_contents($_FILES['image']['tmp_name']);
 
-    // Debugging: Überprüfen, ob die Variablen richtig gesetzt sind
-    echo "User ID: $userId<br>";
-    echo "Category ID: $categoryId<br>";
-    echo "Description: $description<br>";
-    echo "Image Data Length: " . strlen($imageData) . " bytes<br>";
-
     // Bilddaten in die Datenbank speichern (als BLOB)
     $sql = "INSERT INTO image (user_id, category_id, image_data, description, upload_date) 
             VALUES (:user_id, :category_id, :image_data, :description, NOW())";
     $stmt = $pdo->prepare($sql);
-
-    // Debugging: Zeige die SQL-Abfrage und die gebundenen Werte
-    var_dump($sql);
-    var_dump($stmt);
 
     // Bild in die Datenbank einfügen
     if ($stmt->execute([
@@ -33,32 +24,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['image'])) {
         'image_data' => $imageData,  // Bild als BLOB in die Datenbank einfügen
         'description' => $description
     ])) {
-        echo "Bild erfolgreich in die Datenbank eingefügt!";
+        // Erfolgsmeldung
+        echo "<p class='result-upload'>Bild erfolgreich hochgeladen! <a href='dashboard.php'>Gehe zum Dashboard</a></p>";
     } else {
-        // Debugging: Zeige die Fehlermeldung aus der SQL-Abfrage
-        $errorInfo = $stmt->errorInfo();
-        echo "Fehler beim Einfügen des Bildes in die Datenbank: <br>";
-        echo "SQLSTATE-Fehlercode: " . $errorInfo[0] . "<br>";
-        echo "Fehlercode: " . $errorInfo[1] . "<br>";
-        echo "Fehlerbeschreibung: " . $errorInfo[2] . "<br>";
+        // Fehlerbehandlung
+        echo "<p>Fehler beim Hochladen des Bildes. Bitte versuche es erneut.</p>";
     }
 }
 ?>
 
+<main class="register-page">
+    <!-- Bild-Upload -->
+    <form class="form-default-design" method="POST" enctype="multipart/form-data">
+        <input type="file" name="image" required><br>
+        <label for="category_id">Kategorie wählen:</label><br>
+        <select name="category_id" required>
+            <option value="1">Street Photography</option>
+            <option value="2">Landscape</option>
+            <option value="3">Portrait</option>
+        </select><br>
+        <textarea name="description" placeholder="Beschreibung" required></textarea><br>
+        <button type="submit">hochladen</button>
+    </form>
+</main>
 
-
-
-<!-- HTML Formular für den Bild-Upload -->
-<form method="POST" enctype="multipart/form-data">
-    <input type="file" name="image" required><br>
-    <label for="category_id">Kategorie wählen:</label><br>
-    <select name="category_id" required>
-        <option value="1">Street Photography</option>
-        <option value="2">Landscape</option>
-        <option value="3">Portrait</option>
-    </select><br>
-    <textarea name="description" placeholder="Beschreibung" required></textarea><br>
-    <button type="submit">hochladen</button>
-</form>
+<?php
+include 'footer.php';
+?>
 
 

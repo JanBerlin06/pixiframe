@@ -1,7 +1,7 @@
 <?php
 
 include 'db.php';
-include 'navigation.php';  // Header einbinden
+include 'header.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $name = $_POST['name'];
@@ -19,10 +19,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 ?>
 
+<main class="register-page">
+    <h1>PixiFrame - Registrierung</h1>
 <!-- HTML Formular für die Registrierung -->
-<form method="POST">
+<form class="form-default-design" method="POST">
     <input type="text" name="name" placeholder="Name" required><br>
     <input type="email" name="email" placeholder="E-Mail" required><br>
     <input type="password" name="password" placeholder="Passwort" required><br>
     <button type="submit">Registrieren</button>
 </form>
+</main>
+
+<?php
+include 'footer.php';
+?>

@@ -1,87 +1,68 @@
 <?php
 include 'db.php';
-include 'navigation.php';  // Navigation einbinden
+include 'header.php';
 session_start();  // Session starten
 
-// Anzahl der Bilder pro Seite
-$limit = 10;
-$offset = isset($_GET['offset']) ? (int)$_GET['offset'] : 0;
+// Kategorie-Filter (standardmäßig keine Kategorie ausgewählt)
+$categoryFilter = isset($_GET['category']) ? (int)$_GET['category'] : null;
 
-// Abfrage: 10 Bilder aus der Datenbank abrufen
-$sql = "SELECT * FROM image LIMIT :limit OFFSET :offset";
-$stmt = $pdo->prepare($sql);
-$stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
-$stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+// SQL-Abfrage für das Laden von Bildern, abhängig von der gewählten Kategorie
+if ($categoryFilter) {
+    $sql = "SELECT * FROM image WHERE category_id = :category_id";
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindValue(':category_id', $categoryFilter, PDO::PARAM_INT);
+} else {
+    $sql = "SELECT * FROM image";
+    $stmt = $pdo->prepare($sql);
+}
+
 $stmt->execute();
 $images = $stmt->fetchAll();
+
+// Kategorien für die Suche
+$categories = [
+    1 => 'Street Photography',
+    2 => 'Landscape',
+    3 => 'Portrait'
+];
 ?>
 
-<!DOCTYPE html>
-<html lang="de">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PixiFrame - Explore</title>
 
-    <style>
-        .gallery-container {
-            width: 80%;
-            margin: auto;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-        }
 
-        .gallery-item {
-            margin: 10px;
-            padding: 10px;
-            border: 1px solid #ddd;
-            width: 200px;
-            text-align: center;
-        }
+<h1>PixiFrame</h1>
 
-        .gallery-item img {
-            width: 100%;
-            height: auto;
-            cursor: pointer;
-        }
+<!-- Suchformular für die Kategorien -->
+<div class="search-container">
+    <form method="GET" action="">
+        <select name="category">
+            <option value="">Alle Kategorien</option>
+            <?php foreach ($categories as $id => $categoryName): ?>
+                <option value="<?php echo $id; ?>" <?php echo ($categoryFilter == $id) ? 'selected' : ''; ?>>
+                    <?php echo $categoryName; ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
+        <button type="submit">Suchen</button>
+    </form>
+</div>
 
-        .load-more {
-            display: block;
-            margin: 20px auto;
-            padding: 10px 20px;
-            background-color: #007BFF;
-            color: white;
-            text-decoration: none;
-            text-align: center;
-        }
-
-        .load-more:hover {
-            background-color: #0056b3;
-        }
-    </style>
-</head>
-<body>
-
-<h1>PixiFrame - Explore</h1>
-
+<!-- Galerie der Bilder -->
 <div class="gallery-container">
     <?php if ($images): ?>
         <?php foreach ($images as $image): ?>
-            <div class="gallery-item">
+            <div class="gallery-item gallery-item-hover">
                 <a href="detail.php?image_id=<?php echo $image['image_id']; ?>">
                     <?php $imgData = base64_encode($image['image_data']); ?>
                     <img src="data:image/jpeg;base64,<?php echo $imgData; ?>" alt="Kundenbild">
                 </a>
+                <p class="cat-p">Kategorie: <?php echo $categories[$image['category_id']]; ?></p>
             </div>
         <?php endforeach; ?>
     <?php else: ?>
-        <p>Es wurden noch keine Bilder hochgeladen.</p>
+        <p>Es wurden keine Bilder für die ausgewählte Kategorie gefunden.</p>
     <?php endif; ?>
 </div>
 
-<!-- Button zum Laden von mehr Bildern -->
-<a href="?offset=<?php echo $offset + $limit; ?>" class="load-more">Mehr Bilder laden</a>
-
-</body>
-</html>
+<?php
+include 'footer.php';
+?>
