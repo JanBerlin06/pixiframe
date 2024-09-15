@@ -1,5 +1,13 @@
 <?php
 
+/*
+  Zusammengefasst:
+  - Webhook-Secret wird zur Validierung verwendet, um sicherzustellen, dass das Ereignis von Stripe stammt.
+  - Bei einer erfolgreichen Zahlung (checkout.session.completed) wird der Benutzer in der Datenbank als Premium markiert.
+  - Bei einer fehlgeschlagenen Zahlung (invoice.payment_failed) wird der Benutzer in der Datenbank als nicht Premium markiert.
+  - Der Webhook sorgt dafür, dass Stripe-Ereignisse in Echtzeit verarbeitet werden und die Benutzerrechte in der Anwendung automatisch aktualisiert werden.
+*/
+
 require 'vendor/autoload.php';  // Stripe SDK laden
 \Stripe\Stripe::setApiKey('sk_test_51PzCvyH2xV5hWVmgLWy5W0HvGzyCkVtda0fbgWLImA61GJdOS6yWO1QxUfhnmNVKxigkofwnA3FVPXp43PFv9svv00SKMtcQko');  // API Secret Key
 

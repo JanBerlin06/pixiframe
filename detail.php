@@ -21,6 +21,14 @@ if (isset($_GET['image_id'])) {
     $commentStmt = $pdo->prepare($commentSql);
     $commentStmt->execute(['image_id' => $imageId]);
     $comments = $commentStmt->fetchAll();
+
+    // Überprüfen, ob der Benutzer ein Premium-Abo hat
+    $userId = $_SESSION['user_id'];
+    $premiumSql = "SELECT is_premium FROM users WHERE user_id = :user_id";
+    $premiumStmt = $pdo->prepare($premiumSql);
+    $premiumStmt->execute(['user_id' => $userId]);
+    $user = $premiumStmt->fetch();
+    $isPremium = $user['is_premium'];
 }
 ?>
 
@@ -37,6 +45,11 @@ if (isset($_GET['image_id'])) {
             <div class="image-info">
                 <p><?php echo htmlspecialchars($image['description']); ?></p>
                 <p class="category">Kategorie: <?php echo htmlspecialchars($image['category_name']); ?></p>
+
+                <!-- Download-Button anzeigen, wenn der Benutzer Premium ist -->
+                <?php if ($isPremium == 1): ?>
+                    <a href="download.php?image_id=<?php echo $image['image_id']; ?>" class="btn btn-download">Bild herunterladen</a>
+                <?php endif; ?>
 
                 <!-- Kommentare zu diesem Bild anzeigen -->
                 <div class="comments">
@@ -73,4 +86,3 @@ if (isset($_GET['image_id'])) {
 <?php
 include 'footer.php';
 ?>
-

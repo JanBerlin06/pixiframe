@@ -1,6 +1,7 @@
 <?php
 include 'db.php';
 session_start();
+ob_start(); // Output-Pufferung starten
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['comment_text'], $_POST['image_id'])) {
     $commentText = $_POST['comment_text'];
@@ -13,7 +14,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['comment_text'], $_POST
         $stmt = $pdo->prepare($sql);
         $stmt->execute(['user_id' => $_SESSION['user_id']]);
         $user = $stmt->fetch();
-
         $author = $user['name'];  // Den "name" aus der Datenbank verwenden
     } else {
         // Benutzer ist nicht eingeloggt, setze den Standardwert "Gast"
@@ -31,10 +31,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['comment_text'], $_POST
         'user_id' => isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null  // Benutzer-ID oder null für Gäste
     ]);
 
-    // Nach dem Kommentar zurück zur Bildseite
+    // Nach dem Kommentar zurück zur Bilddetailseite leiten
     header("Location: detail.php?image_id=" . $imageId);
     exit;
+} else {
+    echo "Ungültige Anfrage. Kommentartext oder Bild-ID fehlt.";
 }
+
+ob_end_flush(); // Output-Pufferung beenden und ausgeben
 ?>
+
 
 
